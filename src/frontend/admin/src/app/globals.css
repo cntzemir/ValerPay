@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-[#05080c] text-white antialiased;
+}
+
+a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+button {
+  @apply outline-none;
+}

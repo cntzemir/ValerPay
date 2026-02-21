@@ -1,0 +1,31 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.vs/
+
+# Node / Next / Build
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+*.log
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Prisma / DB files
+*.db
+*.sqlite
+*.sqlite3
+prisma/dev.db
+data/
+tmp/
+
+# Misc
+*.tgz

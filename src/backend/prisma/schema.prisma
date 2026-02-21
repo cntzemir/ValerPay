@@ -1,0 +1,299 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum RequestType {
+  DEPOSIT
+  WITHDRAW
+}
+
+enum RequestMethod {
+  BANK
+  CARD
+  CRYPTO
+}
+
+enum RequestStatus {
+  NEW
+  ASSIGNED
+  APPROVED
+  REJECTED
+  SENT
+  COMPLETED
+}
+
+enum ActorType {
+  USER
+  ADMIN
+  SYSTEM
+}
+
+enum AccountOwnerType {
+  USER
+  SYSTEM
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  status       UserStatus @default(ACTIVE)
+
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  requests       Request[]
+  accounts       Account[]
+  devices        UserDevice[]
+  ledgerAccounts LedgerAccount[]
+  securityLogs   SecurityLog[]
+}
+
+model UserDevice {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  ip          String?
+  userAgent   String?
+  fingerprint String?
+  lastSeenAt  DateTime @default(now())
+
+  createdAt DateTime @default(now())
+}
+
+enum AdminRole {
+  ADMIN
+  SUPER_ADMIN
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         AdminRole
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ilişkiler
+  actionLogs       AdminActionLog[] @relation("AdminUserLogs")
+  assignedRequests Request[]        @relation("AssignedRequests")
+  securityLogs     SecurityLog[]
+}
+model AppConfig {
+  key       String   @id
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model PaymentConfig {
+  id                  String   @id
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  depositsEnabled     Boolean  @default(true)
+  withdrawsEnabled    Boolean  @default(true)
+
+  bankDepositEnabled  Boolean  @default(true)
+  cardDepositEnabled  Boolean  @default(true)
+  cryptoDepositEnabled Boolean @default(true)
+
+  bankWithdrawEnabled  Boolean @default(true)
+  cardWithdrawEnabled  Boolean @default(true)
+  cryptoWithdrawEnabled Boolean @default(true)
+
+  bankIban            String? 
+  bankRecipient       String? 
+  bankDescription     String?
+
+  cryptoNetwork       String? 
+  cryptoAddress       String? 
+  cryptoMemo          String?
+}
+
+
+model Asset {
+  id       String @id @default(cuid())
+  code     String @unique
+  type     String
+  decimals Int
+
+  accounts       Account[]
+  requests       Request[]
+  ledgerAccounts LedgerAccount[]
+}
+
+model Account {
+  id          String           @id @default(cuid())
+  ownerType   AccountOwnerType
+  ownerUserId String?
+  ownerUser   User?            @relation(fields: [ownerUserId], references: [id])
+
+  assetId String
+  asset   Asset  @relation(fields: [assetId], references: [id])
+
+  name String
+
+  createdAt DateTime @default(now())
+
+  entries LedgerEntry[]
+
+  @@unique([name, assetId])
+  @@index([ownerType, ownerUserId, assetId])
+}
+
+model Request {
+  id      String        @id @default(cuid())
+  type    RequestType
+  method  RequestMethod
+  assetId String
+  asset   Asset         @relation(fields: [assetId], references: [id])
+
+  amountMinor BigInt
+
+  status RequestStatus @default(NEW)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  assignedToId String?
+  assignedTo   AdminUser? @relation("AssignedRequests", fields: [assignedToId], references: [id])
+
+  memo         String?
+  metadataJson String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  events      AuditEvent[]
+  ledgerEntry LedgerEntry?
+  logs        AdminActionLog[] @relation("RequestLogs")
+}
+
+enum LedgerAccountType {
+  SYSTEM_CASH
+  USER_WALLET
+}
+
+model SecurityLog {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // USER / ADMIN / SYSTEM
+  actorType  String
+  actorId    String?
+  actorEmail String?
+
+  action    String // örn: USER_LOGIN, ADMIN_LOGIN, USER_REGISTER
+  ip        String?
+  userAgent String?
+  success   Boolean
+  metadata  Json?
+
+  // Opsiyonel ilişkiler
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  adminUserId String?
+  adminUser   AdminUser? @relation(fields: [adminUserId], references: [id])
+}
+
+model AdminActionLog {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  adminId String
+  admin   AdminUser @relation("AdminUserLogs", fields: [adminId], references: [id])
+
+  requestId String?
+  request   Request? @relation("RequestLogs", fields: [requestId], references: [id])
+
+  action     String
+  fromStatus RequestStatus?
+  toStatus   RequestStatus?
+  note       String?
+}
+
+model LedgerAccount {
+  id      String            @id @default(cuid())
+  type    LedgerAccountType
+  assetId String
+  asset   Asset             @relation(fields: [assetId], references: [id])
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  ledgerLines LedgerLine[]
+
+  @@unique([type, assetId, userId])
+}
+
+model LedgerEntry {
+  id        String   @id @default(cuid())
+  requestId String?  @unique
+  request   Request? @relation(fields: [requestId], references: [id])
+
+  memo      String?
+  createdAt DateTime @default(now())
+
+  lines     LedgerLine[]
+  account   Account?     @relation(fields: [accountId], references: [id])
+  accountId String?
+}
+
+model LedgerLine {
+  id      String      @id @default(cuid())
+  entryId String
+  entry   LedgerEntry @relation(fields: [entryId], references: [id])
+
+  accountId String
+  account   LedgerAccount @relation(fields: [accountId], references: [id])
+
+  // Pozitif değer: amountMinor
+  amountMinor BigInt
+
+  // 'DEBIT' | 'CREDIT'
+  dc String
+
+  createdAt DateTime @default(now())
+
+  @@index([accountId])
+}
+
+model AuditEvent {
+  id        String    @id @default(cuid())
+  actorType ActorType
+  actorId   String?
+
+  action     String
+  entityType String
+  entityId   String
+
+  ip        String?
+  userAgent String?
+
+  beforeJson String?
+  afterJson  String?
+
+  createdAt DateTime @default(now())
+
+  requestId String?
+  request   Request? @relation(fields: [requestId], references: [id])
+
+  @@index([entityType, entityId, createdAt])
+}

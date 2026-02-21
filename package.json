@@ -1,0 +1,18 @@
+{
+  "name": "valerpay",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "src/backend",
+    "src/frontend/admin",
+    "src/frontend/user"
+  ],
+  "scripts": {
+    "dev:backend": "npm --workspace src/backend run start:dev",
+    "dev:admin": "npm --workspace src/frontend/admin run dev -- -p 3000",
+    "dev:user": "npm --workspace src/frontend/user run dev -- -p 3002",
+    "build": "npm --workspace src/backend run build && npm --workspace src/frontend/admin run build && npm --workspace src/frontend/user run build",
+    "lint": "npm --workspace src/backend run lint && npm --workspace src/frontend/admin run lint && npm --workspace src/frontend/user run lint",
+    "test": "npm --workspace src/backend run test"
+  }
+}
