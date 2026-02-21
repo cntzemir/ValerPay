@@ -21,7 +21,7 @@ export class RequestContextMiddleware implements NestMiddleware {
     }
 
     req.clientIp = ip;
-    req.clientUserAgent = (req.headers['user-agent'] as string | undefined) ?? undefined;
+    req.clientUserAgent = req.headers['user-agent'] ?? undefined;
 
     next();
   }

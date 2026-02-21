@@ -7,10 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class LedgerService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getUserWalletBalance(
-    userId: string,
-    assetId: string,
-  ): Promise<bigint> {
+  async getUserWalletBalance(userId: string, assetId: string): Promise<bigint> {
     const rows = await this.prisma.ledgerLine.groupBy({
       by: ['dc'],
       where: {

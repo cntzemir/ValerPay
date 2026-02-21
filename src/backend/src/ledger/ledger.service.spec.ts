@@ -32,7 +32,9 @@ describe('LedgerService (unit)', () => {
   });
 
   it('should treat missing sums as zero', async () => {
-    (prismaMock.ledgerLine.groupBy as any).mockResolvedValue([{ dc: 'DEBIT', _sum: { amountMinor: null } }]);
+    (prismaMock.ledgerLine.groupBy as any).mockResolvedValue([
+      { dc: 'DEBIT', _sum: { amountMinor: null } },
+    ]);
     const bal = await service.getUserWalletBalance('u1', 'asset1');
     expect(bal).toBe(0n);
   });

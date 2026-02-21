@@ -1,9 +1,9 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export type CurrentAdminData = {
-  sub: string;          
+  sub: string;
   email: string;
-  role?: string;        
+  role?: string;
 };
 
 export const CurrentAdmin = createParamDecorator(
@@ -15,11 +15,7 @@ export const CurrentAdmin = createParamDecorator(
       return null;
     }
 
-    if (
-      user.role &&
-      user.role !== 'ADMIN' &&
-      user.role !== 'SUPER_ADMIN'
-    ) {
+    if (user.role && user.role !== 'ADMIN' && user.role !== 'SUPER_ADMIN') {
       return null;
     }
 

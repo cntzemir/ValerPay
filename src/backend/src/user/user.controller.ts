@@ -28,7 +28,6 @@ type RequestStatusFilter =
   | 'COMPLETED'
   | 'REJECTED';
 
-
 type PaymentConfig = {
   depositsEnabled: boolean;
   withdrawsEnabled: boolean;
@@ -64,10 +63,10 @@ const DEFAULT_PAYMENT_CONFIG: PaymentConfig = {
 };
 
 type DepositBody = {
-  method: RequestMethod; 
+  method: RequestMethod;
   amountMinor: number;
   memo?: string | null;
-  metadata?: any; 
+  metadata?: any;
 };
 
 type WithdrawBody = {
@@ -124,7 +123,7 @@ export class UserController {
       });
       return DEFAULT_PAYMENT_CONFIG;
     }
-    return (row.value as any) as PaymentConfig;
+    return row.value as any as PaymentConfig;
   }
 
   // =============== WALLET BALANCE HELPERLARI ===============
@@ -203,9 +202,7 @@ export class UserController {
   }
 
   @Get('config/payments')
-  async userGetPaymentConfig(
-    @CurrentUser() current: CurrentUserData | null,
-  ) {
+  async userGetPaymentConfig(@CurrentUser() current: CurrentUserData | null) {
     this.ensureUser(current);
     const cfg = await this.getPaymentConfig();
     return { ok: true, value: cfg };

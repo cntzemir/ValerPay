@@ -9,11 +9,10 @@ jobs:
   build_test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [20]
+    env:
+      DATABASE_URL: "file:./ci.db"
+      JWT_SECRET: "ci_dummy_secret"
+      NEXT_PUBLIC_API_URL: "http://localhost:3001"
 
     steps:
       - name: Checkout
@@ -22,8 +21,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          # cache kaldırıldı -> lock file arayıp hata vermeyecek
+          node-version: 20
+          cache: npm
 
       - name: Install (workspaces)
         run: npm ci --no-audit --no-fund

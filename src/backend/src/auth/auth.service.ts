@@ -17,7 +17,6 @@ export class AuthService {
     private readonly jwt: JwtService,
   ) {}
 
-
   private hashPassword(plain: string): string {
     return crypto.createHash('sha256').update(plain).digest('hex');
   }
@@ -25,7 +24,6 @@ export class AuthService {
   private async signToken(payload: any): Promise<string> {
     return this.jwt.signAsync(payload);
   }
-
 
   async registerUser(body: RegisterDto) {
     const email = body.email?.trim().toLowerCase();
@@ -73,7 +71,6 @@ export class AuthService {
     };
   }
 
-
   async loginUser(body: LoginDto) {
     const email = body.email?.trim().toLowerCase();
     const password = body.password ?? '';
@@ -112,7 +109,6 @@ export class AuthService {
     };
   }
 
-
   async loginAdmin(body: LoginDto) {
     const email = body.email?.trim().toLowerCase();
     const password = body.password ?? '';
@@ -137,7 +133,7 @@ export class AuthService {
     const payload = {
       sub: admin.id,
       email: admin.email,
-      role: admin.role, 
+      role: admin.role,
     };
 
     const accessToken = await this.signToken(payload);

@@ -86,7 +86,8 @@ export class AdminController {
   private getAdminId(current: CurrentAdminData): string {
     const c: any = current as any;
     const id = c.adminId ?? c.adminUserId ?? c.id ?? c.userId ?? c.sub;
-    if (!id) throw new UnauthorizedException('Admin id token içinde bulunamadı');
+    if (!id)
+      throw new UnauthorizedException('Admin id token içinde bulunamadı');
     return String(id);
   }
 
@@ -303,10 +304,7 @@ export class AdminController {
       throw new BadRequestException('Bu talep için ledger zaten yazılmış.');
     }
 
-    const userWallet = await this.getOrCreateUserWalletAccount(
-      userId,
-      assetId,
-    );
+    const userWallet = await this.getOrCreateUserWalletAccount(userId, assetId);
     const systemCash = await this.getOrCreateSystemCashAccount(assetId);
 
     const lines =
@@ -725,9 +723,9 @@ export class AdminController {
     const available = await this.getAvailableBalanceMinor(user.id, asset.id);
     if (BigInt(amountMinor) > available) {
       throw new BadRequestException(
-        `Yetersiz bakiye. Kullanılabilir: ${(
-          Number(available) / 100
-        ).toFixed(2)} TL`,
+        `Yetersiz bakiye. Kullanılabilir: ${(Number(available) / 100).toFixed(
+          2,
+        )} TL`,
       );
     }
 
@@ -754,8 +752,6 @@ export class AdminController {
     });
 
     return { ok: true, id: req.id };
-
-    
   }
   private extractToken(q: string, key: 'status' | 'action') {
     const re = new RegExp(`\\b${key}:([A-Z_]+)\\b`, 'g');
@@ -859,7 +855,6 @@ export class AdminController {
 
     return { value, Count: value.length, nextCursor };
   }
-
 
   @Get('ledger/entries')
   async listLedgerEntries(
@@ -980,6 +975,3 @@ export class AdminController {
     };
   }
 }
-
-
-  

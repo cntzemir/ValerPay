@@ -20,7 +20,13 @@ import { LedgerService } from './ledger/ledger.service';
     }),
   ],
   controllers: [AppController, AdminController, UserController, AuthController],
-  providers: [LedgerService, PrismaService, AuthService, JwtStrategy, JwtAuthGuard],
+  providers: [
+    LedgerService,
+    PrismaService,
+    AuthService,
+    JwtStrategy,
+    JwtAuthGuard,
+  ],
   exports: [LedgerService],
 })
 export class AppModule implements NestModule {
