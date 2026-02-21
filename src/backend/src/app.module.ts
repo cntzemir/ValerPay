@@ -1,9 +1,7 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { AdminController } from './admin/admin.controller';
 import { AuthController } from './auth/auth.controller';
 import { UserController } from './user/user.controller';
@@ -25,7 +23,6 @@ import { PrismaService } from './prisma/prisma.service';
   ],
   controllers: [AppController, AdminController, UserController, AuthController],
   providers: [
-    AppService,
     LedgerService,
     PrismaService,
     AuthService,
