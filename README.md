@@ -240,15 +240,15 @@ Full details: **`docs/api.md`**
 
 ### Highlights
 <p>
-  <img src="docs/screenshots/01-admin-dashboard.png" width="320" alt="Admin dashboard" />
-  <img src="docs/screenshots/02-admin-request-detail.png" width="320" alt="Admin request detail" />
-  <img src="docs/screenshots/03-user-portal.png" width="320" alt="User portal" />
+  <img src="docs/screenshots/01-user-wallet.png" width="320" alt="Admin dashboard" />
+  <img src="docs/screenshots/02-user-create-request.png" width="320" alt="Admin request detail" />
+  <img src="docs/screenshots/03-user-requests-status.png" width="320" alt="User portal" />
 </p>
 
 <p>
-  <img src="docs/screenshots/04-user-create-request.png" width="320" alt="User create request" />
-  <img src="docs/screenshots/05-ledger-entries.png" width="320" alt="Ledger entries" />
-  <img src="docs/screenshots/06-daily-report.png" width="320" alt="Daily report" />
+  <img src="docs/screenshots/04-admin-requests-list.png" width="320" alt="User create request" />
+  <img src="docs/screenshots/05-admin-request-detail.png" width="320" alt="Ledger entries" />
+  <img src="docs/screenshots/06-admin-dashboard.png" width="320" alt="Daily report" />
 </p>
 
 ### More screenshots (optional)
@@ -256,15 +256,8 @@ Full details: **`docs/api.md`**
   <summary><b>Click to expand</b></summary>
 
   <p>
-    <img src="docs/screenshots/07-auth.png" width="320" alt="Auth" />
-    <img src="docs/screenshots/08-payment-config.png" width="320" alt="Payment config" />
-    <img src="docs/screenshots/09-audit-logs.png" width="320" alt="Audit logs" />
-  </p>
-
-  <p>
-    <img src="docs/screenshots/10-request-status-flow.png" width="320" alt="Request status flow" />
-    <img src="docs/screenshots/11-mobile-user.png" width="320" alt="Mobile view" />
-    <img src="docs/screenshots/12-error-states.png" width="320" alt="Error states" />
+    <img src="docs/screenshots/07-admin-payment-settings.png" width="320" alt="Auth" />
+    <img src="docs/screenshots/08-admin-audit-logs.png" width="320" alt="Payment config" />
   </p>
 </details>
 
