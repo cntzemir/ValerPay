@@ -1,26 +1,26 @@
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
-import { JwtModule } from "@nestjs/jwt";
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
-import { AdminController } from "./admin/admin.controller";
-import { UserController } from "./user/user.controller";
-import { AuthController } from "./auth/auth.controller";
+import { AdminController } from './admin/admin.controller';
+import { AuthController } from './auth/auth.controller';
+import { UserController } from './user/user.controller';
 
-import { PrismaService } from "./prisma/prisma.service";
-import { AuthService } from "./auth/auth.service";
-import { JwtStrategy } from "./auth/jwt.strategy";
-import { JwtAuthGuard } from "./auth/jwt-auth.guard";
+import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { JwtStrategy } from './auth/jwt.strategy';
 
-import { RequestContextMiddleware } from "./common/request-context.middleware";
-import { LedgerService } from "./ledger/ledger.service";
+import { RequestContextMiddleware } from './common/request-context.middleware';
+import { LedgerService } from './ledger/ledger.service';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: process.env.JWT_SECRET ?? "dev-secret-change-me",
-      signOptions: { expiresIn: "1h" },
+      secret: process.env.JWT_SECRET ?? 'dev-secret-change-me',
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [AppController, AdminController, UserController, AuthController],
@@ -36,6 +36,6 @@ import { LedgerService } from "./ledger/ledger.service";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RequestContextMiddleware).forRoutes("*");
+    consumer.apply(RequestContextMiddleware).forRoutes('*');
   }
 }
