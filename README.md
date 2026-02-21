@@ -237,8 +237,6 @@ Full details: **`docs/api.md`**
 
 ## Screenshots
 
-> Replace the images below with your real screenshots (you said you have many — perfect).  
-> Keep filenames stable so README renders correctly.
 
 ### Highlights
 <p>
