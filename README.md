@@ -15,7 +15,9 @@ This repository is not presented as a production fintech platform. It is built t
 - **predictable backend behavior**
 - **reviewer-friendly documentation and setup**
 
-![ValerPay - High-level architecture](docs/architecture.png)
+<p align="center">
+  <img src="docs/architecture.png" alt="ValerPay architecture" width="760">
+</p>
 
 ---
 
