@@ -355,20 +355,20 @@ npm test
 
 ## Next version goals
 
-- add versioned Swagger / OpenAPI documentation
-- add end-to-end smoke tests in CI with a seeded database
-- expand frontend test coverage
-- add Docker Compose for one-command local setup
-- add richer reporting / admin review utilities
-- document more failure-case handling around request processing and reconciliation
+- add a seeded reviewer mode / OpenAPI-style API documentation
+- expand end-to-end test coverage across the main request lifecycle
+- improve operational reporting and reconciliation-oriented views
+- add a Docker Compose local setup for easier reviewer onboarding
+- document more failure scenarios around request processing and reconciliation
+- strengthen admin-side audit tooling and export options
 
 ---
 
 ## AI assistance
 
-This project was developed with AI assistance (ChatGPT) for brainstorming, refactoring suggestions, and debugging support.
+This project was developed with limited AI assistance for brainstorming, phrasing, and refactoring support.
 
-Final implementation, integration decisions, and testing were done by me.
+The system design, request lifecycle, implementation decisions, integration work, local setup, testing flow, and final review were completed by me.
 
 ### What I did myself
 
