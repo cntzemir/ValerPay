@@ -3,17 +3,17 @@
 [![CI](../../actions/workflows/ci.yml/badge.svg)](../../actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-**ValerPay** is a workflow-oriented demo payment platform built to model a realistic operational flow: users create **deposit** and **withdraw** requests, and admins **review → approve/reject → send → complete** them.
+**ValerPay** is a workflow-oriented demo payment platform built to model a realistic operational flow: users create **deposit** and **withdraw** request, while admins review, approve, reject, send, and complete them.
 
-The project’s most important design choice is that balances are **not** stored as a mutable number. Instead, they are derived from an **append-only ledger** built from immutable **DEBIT/CREDIT** entries.
+The most important design choice in this project is that balances are not stored as a mutable number. Instead, they are derived from an append-only ledger built from immutable **DEBIT** and **CREDIT** entries.
 
-This repo is meant to show more than a generic full-stack demo. It is built to highlight:
+This repository is not presented as a production fintech platform. It is built to demonstrate:
 
 - **workflow integrity**
 - **role separation**
 - **audit-friendly state transitions**
 - **predictable backend behavior**
-- **reviewable documentation and setup**
+- **reviewer-friendly documentation and setup**
 
 ![ValerPay - High-level architecture](docs/architecture.png)
 
