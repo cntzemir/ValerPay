@@ -41,6 +41,17 @@ This repository is not presented as a production fintech platform. It is built t
 
 ---
 
+## Top takeaway
+
+This repo is built to demonstrate four things clearly:
+
+- ledger-based balances instead of mutable balance storage
+- explicit role separation between user and admin behavior
+- auditable request lifecycle and controlled state transitions
+- reviewer-friendly backend logic, setup, and documentation
+
+---
+
 ## Why this project matters
 
 Many demo payment apps focus on UI or basic CRUD, but real systems are usually judged by whether their workflows remain consistent, traceable, and reviewable when multiple roles interact with the same request.
